@@ -53,5 +53,5 @@ if [[ -z $title ]]; then
 fi
 
 
-curl -s --user "$username:$password" -X POST "https://api.github.com/repos/$remote_origin/pulls" -d "{\"title\":\"$title\",\"base\":\"master\",\"head\":\"$current_branch\",\"body\":\"$@\"}"
+curl -s --user "$username:$password" -X POST "https://api.github.com/repos/$remote_origin/pulls" -d "{\"title\":\"$title\",\"base\":\"master\",\"head\":\"$current_branch\",\"body\":\"$@\"}" > /dev/null
 
