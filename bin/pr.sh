@@ -33,7 +33,7 @@ done
 shift $((OPTIND - 1))
 
 if [[ $current_branch == 'master' ]]; then
-  echo "You're already on master, create a new branch, push it, and then run this script to open a PR to merge into master"
+  echo "ERROR! You're already on master, create a new branch, push it, and then run this script to open a PR to merge into master" >&2
   exit 1
 fi
 
@@ -53,5 +53,5 @@ if [[ -z $title ]]; then
 fi
 
 
-curl -s --user "$username:$password" -X POST "https://api.github.com/repos/$remote_origin/pulls" -d "{\"title\":\"$title\",\"base\":\"master\",\"head\":\"$current_branch\",\"body\":\"$@\"}"
+curl -s --user "$username:$password" -X POST "https://api.github.com/repos/$remote_origin/pulls" -d "{\"title\":\"$title\",\"base\":\"master\",\"head\":\"$current_branch\",\"body\":\"$@\"}" > /dev/null
 
