@@ -35,14 +35,13 @@ shift $((OPTIND - 1))
 
 # should be on the branch you're PRing
 if [[ $current_branch == 'master' ]]; then
-  echo "You're already on master, create a new branch, push it, and then run this script to open a PR to merge into master"
+  echo "You're already on master, create a new branch and then run this script to open a PR to merge into master"
   exit 1
 fi
 
-# that branch should exist in the remote already
-if ! git ls-remote --exit-code --heads $(git remote get-url --push origin) "refs/heads/$current_branch"; then
-  echo "This branch isn't pushed. First push this branch, then re-run this script." >&2
-  exit 1
+# if this branch doesn't exist in the remote already, push it
+if ! git ls-remote --exit-code --heads $(git remote get-url --push origin) "refs/heads/$current_branch" > /dev/null; then
+  git push -u origin $current_branch
 fi
 
 check_is_set() {
