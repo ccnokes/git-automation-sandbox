@@ -57,5 +57,12 @@ data=$(cat <<-END
 END
 )
 
-curl -s --user "$username:$password" -X POST "https://api.github.com/repos/ccnokes/git-automation-sandbox/pulls" -d "$data" > /dev/null
-echo 'COMPLETE'
+status_code=$(curl -s --user "$username:$password" -X POST "https://api.github.com/repos/ccnokes/git-automation-sandbox/pulls" -d "$data" -w %{http_code} -o /dev/null)
+
+if [[ status_code == 201 ]]; then
+  echo 'COMPLETE'
+else
+  echo "Error occurred, $status_code status recevied" >&2
+  exit 1
+fi
+
