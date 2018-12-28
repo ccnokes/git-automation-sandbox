@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 username=''
 password=''
@@ -55,4 +57,5 @@ data=$(cat <<-END
 END
 )
 
-curl -s --user "$username:$password" -X POST "https://api.github.com/repos/ccnokes/github-automation-sandbox/pulls" -d "$data" > /dev/null
+curl -s --user "$username:$password" -X POST "https://api.github.com/repos/ccnokes/git-automation-sandbox/pulls" -d "$data" > /dev/null
+echo 'COMPLETE'
